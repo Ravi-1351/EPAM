@@ -1,0 +1,168 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Student Registration Form</title> 
+    <style> 
+        body { 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            background-color: #f4f4f4; 
+        } 
+        .container { 
+            width: 450px; 
+            background: white; 
+            padding: 20px; 
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2); 
+            position: relative; 
+            border-radius: 10px; 
+        } 
+        img { 
+            width: 100px; 
+            height: 100px; 
+            object-fit: cover; 
+            position: absolute; 
+            left: 20px; 
+            top: 20px; 
+            border-radius: 5px; 
+            border: 1px solid #ccc; 
+        } 
+        .input-field { 
+            display: flex; 
+            flex-direction: column; 
+            margin-bottom: 15px; 
+        } 
+        .input-field input { 
+            padding: 8px; 
+            border: 1px solid #ccc; 
+            border-radius: 5px; 
+            font-size: 14px; 
+        } 
+        .error { 
+            color: red; 
+            font-size: 12px; 
+            margin-top: 5px; 
+        } 
+        button { 
+            width: 100%; 
+            padding: 10px; 
+            background-color: #28a745; 
+            border: none; 
+            color: white; 
+            font-size: 16px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        } 
+        button:hover { 
+            background-color: #218838; 
+        } 
+    </style> 
+</head> 
+<body> 
+    <div class="container"> 
+        <img id="photoPreview" src="" alt="Passport Photo" /> 
+        <h2 style="text-align:center;">Student Registration</h2> 
+        <form id="regForm"> 
+            <div class="input-field"> 
+                <label>Student Name:</label> 
+                <input type="text" id="name" required> 
+                <span class="error" id="nameError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Registration Number:</label> 
+                <input type="text" id="regNo" required> 
+                <span class="error" id="regNoError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Mobile No:</label> 
+                <input type="tel" id="mobile" pattern="[0-9]{10}" required> 
+                <span class="error" id="mobileError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Email ID:</label> 
+                <input type="email" id="email" required> 
+                <span class="error" id="emailError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Username:</label> 
+                <input type="text" id="username" required> 
+                <span class="error" id="usernameError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Password:</label> 
+                <input type="password" id="password" required> 
+                <span class="error" id="passwordError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Date of Birth:</label> 
+                <input type="date" id="dob" required> 
+                <span class="error" id="dobError"></span> 
+            </div> 
+            <div class="input-field"> 
+                <label>Age:</label> 
+                <input type="text" id="age" disabled> 
+            </div> 
+            <div class="input-field"> 
+                <label>Upload Passport Photo:</label> 
+                <input type="file" id="photo" accept="image/*"> 
+            </div> 
+            <button type="submit">Register</button> 
+        </form> 
+    </div> 
+     
+    <script> 
+        document.getElementById("dob").addEventListener("change", function() { 
+            let dob = new Date(this.value);
+            let today = new Date(); 
+            let ageYears = today.getFullYear() - dob.getFullYear(); 
+            let ageMonths = today.getMonth() - dob.getMonth(); 
+            let ageDays = today.getDate() - dob.getDate(); 
+            if (ageMonths < 0  (ageMonths === 0 && ageDays < 0)) { 
+                ageYears--; 
+                ageMonths += 12; 
+            } 
+            document.getElementById("age").value = ${ageYears} years, ${ageMonths} months, ${ageDays} days; 
+        }); 
+         
+        document.getElementById("photo").addEventListener("change", function(event) { 
+            let file = event.target.files[0]; 
+            if (file) { 
+                let reader = new FileReader(); 
+                reader.onload = function(e) { 
+                    document.getElementById("photoPreview").src = e.target.result; 
+                }; 
+                reader.readAsDataURL(file); 
+            } 
+        }); 
+         
+        document.getElementById("regForm").addEventListener("submit", function(event) { 
+            let username = document.getElementById("username").value; 
+            let password = document.getElementById("password").value; 
+            let name = document.getElementById("name").value; 
+            let regNo = document.getElementById("regNo").value; 
+            let email = document.getElementById("email").value; 
+            let errors = false; 
+             
+            if (/[^a-zA-Z0-9]/.test(username)) { 
+                document.getElementById("usernameError").textContent = "Username cannot contain special characters."; 
+                errors = true; 
+            } else { 
+                document.getElementById("usernameError").textContent = ""; 
+            } 
+             
+            if (password.length < 8  [name, regNo, email, username].includes(password)) { 
+                document.getElementById("passwordError").textContent = "Password must be 8+ characters and unique."; 
+                errors = true; 
+            } else { 
+                document.getElementById("passwordError").textContent = ""; 
+            } 
+             
+            if (errors) event.preventDefault(); 
+        }); 
+    </script> 
+</body> 
+</html>

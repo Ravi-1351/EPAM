@@ -1,0 +1,27 @@
+body {
+    background-color: mediumaquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+.content {
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+}
+
+img, video, audio {
+    max-width: 100%;
+    margin: 15px 0;
+    display: block;
+    border-radius: 6px;
+}
+
+p{
+    background-color: beige;
+}
